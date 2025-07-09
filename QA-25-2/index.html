@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #e6f0ff;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background-color: #4a90e2;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+    }
+
+    nav .logo {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: default;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    nav ul li a:hover {
+      color: #d1e9ff;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 40px 40px 40px 40px;
+      text-align: center;
+      max-width: 900px;
+      margin: 40px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      text-transform: capitalize;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    h1 {
+      font-size: 3rem;
+      position: relative;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #4a90e2;
+      max-width: max-content;
+      margin: 30px auto 20px auto;
+    }
+
+    h1:hover {
+      color: #4a90e2;
+      cursor: pointer;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: #5a6772;
+      font-weight: 500;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #34495e;
+      margin-bottom: 30px;
+      text-align: justify;
+    }
+
+    img.logo {
+      width: 100px;
+      height: 200px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    img.gallery-img {
+      width: 90%;
+      max-width: 1000px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
+      display: block;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    form label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+      color: #2c3e50;
+    }
+
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    form button {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+    }
+
+    form button:hover {
+      background-color: #357ABD;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #555;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    #aboutModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    #aboutContent {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 30px 40px;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      text-align: justify;
+      position: relative;
+    }
+
+    #aboutContent h1 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 25px;
+      border-bottom: none;
+      color: #4a90e2;
+      font-size: 2.5rem;
+    }
+
+    #closeBtn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #888;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    #closeBtn:hover {
+      color: #4a90e2;
+    }
+
+    /* Media Queries למובייל וטאבלט */
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      nav ul {
+        gap: 15px;
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+
+      nav ul li a {
+        font-size: 1.1rem;
+      }
+
+      .container {
+        padding: 20px 20px 30px 20px;
+        margin: 20px auto;
+        max-width: 95%;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        margin: 20px auto 15px auto;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      img.logo {
+        width: 80px;
+        height: 160px;
+        margin-bottom: 20px;
+      }
+
+      img.gallery-img {
+        width: 100%;
+        max-width: 100%;
+        margin: 15px 0;
+      }
+
+      form {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      nav ul {
+        gap: 10px;
+      }
+
+      nav ul li a {
+        font-size: 1rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">David Cohen</div>
+    <ul>
+      <li><a id="aboutLink">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div id="aboutModal">
+    <div id="aboutContent">
+      <span id="closeBtn">&times;</span>
+      <h1>About Me</h1>
+      <div class="about-text">
+        <p>My Name Is David Cohen, I'm 25 Years Old And Happily Married. I Have A Deep Passion For The World Of Software Testing, Which I Find Fascinating And Ever-Challenging.</p>
+        <p>From The Moment I Discovered QA, I Knew This Was The Field For Me. I Love Diving Into The Details, Finding Bugs, And Ensuring The Highest Quality In Software Products.</p>
+        <p>My Journey Has Been One Of Continuous Learning And Growth. I Believe That Every Test Case Is An Opportunity To Make A Difference And Deliver Excellence.</p>
+        <p>Beyond Testing, I Am Also An Enthusiastic Photographer, Which Allows Me To Express My Creative Side And Capture The Beauty Of Everyday Life.</p>
+        <p>With A Strong Work Ethic, Dedication, And An Eager Mindset, I Am Always Ready To Take On New Challenges And Contribute Meaningfully To Any Team Or Project.</p>
+        <p>Welcome To My Website, And I Hope You Enjoy Exploring My Work And Getting To Know Me Better!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>I'm David Cohen, Photographer</h1>
+    <h2>And This Is My Work</h2>
+    <img src="photographer-7194269_1280.png" alt="My Logo" class="logo" />
+
+    <h1>Street Photography</h1>
+    <img src="IMG_3253.JPG" alt="Street Photo" class="gallery-img" />
+
+    <h1>Independence Day</h1>
+    <img src="IMG_1350.JPG" alt="Independence 1" class="gallery-img" />
+    <img src="IMG_1287.JPG" alt="Independence 2" class="gallery-img" />
+    <img src="IMG_1254.JPG" alt="Independence 3" class="gallery-img" />
+
+    <h1>Coffee</h1>
+    <img src="IMG_3234.JPG" alt="Coffee" class="gallery-img" />
+
+    <h1>Bat Mitzva</h1>
+    <img src="IMG_3831.jpeg" alt="Bat Mitzva 1" class="gallery-img" />
+    <img src="IMG_3724.jpeg" alt="Bat Mitzva 2" class="gallery-img" />
+  </div>
+
+  <div class="container" id="contact">
+    <h1>Contact Me</h1>
+    <form>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Your email" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 David Cohen. Created with Support from AI.
+  </footer>
+
+  <script>
+    const aboutLink = document.getElementById('aboutLink');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeBtn = document.getElementById('closeBtn');
+
+    aboutLink.addEventListener('click', () => {
+      aboutModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // מניעת גלילה כשחלון פתוח
+    });
+
+    closeBtn.addEventListener('click', () => {
+      aboutModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    // סגירת המודאל בלחיצה מחוץ לתוכן
+    window.addEventListener('click', (e) => {
+      if (e.target === aboutModal) {
+        aboutModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+
